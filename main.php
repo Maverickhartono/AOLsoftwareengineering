@@ -113,7 +113,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#events">Events</a> 
+                        <a class="nav-link" href="./index.php">Events</a> 
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#writeups">WriteUps</a>
