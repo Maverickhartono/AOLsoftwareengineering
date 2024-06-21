@@ -15,7 +15,7 @@ $id = intval($_GET['id']);
 $sql = "DELETE FROM `woi` WHERE id = $id";
 
 if ($conn->query($sql) === TRUE) {
-    header("Location: index.php"); // Redirect back to the main page after deletion
+    header("Location: main.php"); // Redirect back to the main page after deletion
     exit();
 } else {
     echo "Error deleting record: " . $conn->error;

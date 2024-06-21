@@ -31,6 +31,8 @@ if (isset($_POST["submit"])) {
 
         if ($result) {
             echo "Data berhasil dimasukkan!";
+            header("Location: main.php");
+            exit;
         } else {
             echo "Error: " . mysqli_error($conn);
         }

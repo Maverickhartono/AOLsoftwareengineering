@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$fullname', '$email', '$username', '$hashed_password', '$phone', '$country', '$state', '$education', '$job', 'member')";
 
         if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Registrasi berhasil')</script>";
+            echo "<script>alert('Registrasi berhasil'); window.location.href = 'index.php';</script>";
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
@@ -62,24 +62,29 @@ $conn->close();
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             height: 100vh;
             margin: 0;
+            padding-top: 50px;
         }
         .container {
             background-color: #fff;
-            padding: 20px 40px;
+            padding: 20px 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            width: 300px;
         }
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 24px;
+            color: #007bff;
         }
         label {
             display: block;
             margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
         }
         input[type="text"],
         input[type="email"],
@@ -90,6 +95,7 @@ $conn->close();
             border-radius: 4px;
             box-sizing: border-box;
             margin-bottom: 20px;
+            font-size: 14px;
         }
         input[type="submit"] {
             width: 100%;

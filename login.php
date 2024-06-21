@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['Password'])) {
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
-            header("Location: main.php");
+            header("Location: index.php");
             exit; // Ensure that code after header is not executed
         } else {
             $password_error = "Password salah. Silakan coba lagi.";
@@ -97,6 +97,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .login-container input[type="submit"]:hover {
             background-color: #218838;
         }
+        .register-link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .register-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -117,6 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <input type="submit" value="Login">
         </form>
+        <a class="register-link" href="register.php">Apakah anda belum punya akun?</a>
     </div>
 </body>
 </html>

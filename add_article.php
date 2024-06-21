@@ -31,24 +31,47 @@ $stmt->fetch();
 $stmt->close();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $image = $_FILES['image']['name'];
-    $target = "image/" . basename($image);
+    if (isset($_POST['id'])) {
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $image = $_FILES['image']['name'];
+        $target = "image/" . basename($image);
 
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-        $sql = "INSERT INTO article (title, description, image) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($sql);
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+            $sql = "UPDATE article SET title = ?, description = ?, image = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
 
-        if ($stmt === false) {
-            die('Prepare failed: ' . htmlspecialchars($conn->error));
+            if ($stmt === false) {
+                die('Prepare failed: ' . htmlspecialchars($conn->error));
+            }
+
+            $stmt->bind_param("sssi", $title, $description, $image, $id);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            echo "Failed to upload image";
         }
-
-        $stmt->bind_param("sss", $title, $description, $image);
-        $stmt->execute();
-        $stmt->close();
     } else {
-        echo "Failed to upload image";
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $image = $_FILES['image']['name'];
+        $target = "image/" . basename($image);
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+            $sql = "INSERT INTO article (title, description, image) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+
+            if ($stmt === false) {
+                die('Prepare failed: ' . htmlspecialchars($conn->error));
+            }
+
+            $stmt->bind_param("sss", $title, $description, $image);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            echo "Failed to upload image";
+        }
     }
 }
 ?>
