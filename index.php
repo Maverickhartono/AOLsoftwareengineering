@@ -3,159 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Data</title>
+    <title>FlagConquest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-image: url('./assets/8351163.gif');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        .navbar {
+            background-color: #FF5733; /* Orange color */
         }
-        .header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        .dropdown-menu {
+            background-color: #FF5733; /* Orange color */
+        }
+
+        .dropdown-item {
+            color: #FFFFFF; /* White color */
+        }
+
+        .dropdown-item:hover {
+            background-color: #FFC300; /* Yellow color */
+        }
+
+        .content-section {
+            padding: 50px;
+            color: #FFFFFF; /* White color */
+            animation: fadeInUp 1s ease;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-title {
+            font-size: 32px;
+            font-weight: bold;
             margin-bottom: 20px;
+            color: #FFFFFF; /* White color */
         }
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            background-color: rgba(173, 216, 230, 0.8); /* Light blue with transparency */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            animation: fadeIn 1s ease-in-out;
+
+        .content-text {
+            font-size: 18px;
+            line-height: 1.6;
         }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: rgba(173, 216, 230, 0.8); /* Light blue with transparency */
-            color: #333;
-            text-align: left;
-            padding: 15px 10px;
-            border-bottom: 2px solid #dee2e6;
-        }
-        tr:nth-child(even) {
-            background-color: rgba(173, 216, 230, 0.6); /* Light blue with more transparency */
-        }
-        tr:hover {
-            background-color: rgba(173, 216, 230, 0.9); /* Light blue with less transparency */
-        }
-        @keyframes fadeIn {
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        .add-data, .logout {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+
+        .contact-card {
+            background-color: #FF5733; /* Orange color */
+            color: #FFFFFF; /* White color */
+            border: none;
+            animation: fadeInLeft 1s ease;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-card-title {
+            font-size: 24px;
+            font-weight: bold;
             margin-bottom: 20px;
+            color: #FFFFFF; /* White color */
         }
-        .add-data:hover, .logout:hover {
-            background-color: #0056b3;
+
+        .contact-card-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #FFFFFF; /* White color */
         }
-        .action-links a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #007bff;
-            transition: color 0.3s ease;
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
-        .action-links a:hover {
-            color: #0056b3;
+
+        body {
+            background-image: url('./assets/pixel-art-gif-Captivating-Pixel-Art-Scenes.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
         }
     </style>
 </head>
 <body>
-    <?php
-    session_start();
-
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
-if (!isset($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
-}
-$csrf_token = $_SESSION['token'];
-
-$conn = new mysqli("localhost", "root", "", "test"); 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$username = $_SESSION['username'];
-$sql = "SELECT role FROM register WHERE username = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$stmt->bind_result($role);
-$stmt->fetch();
-$stmt->close();
-?>
-
-<div class="header">
-    <?php if ($role == 'admin') { ?>
-    <a class="add-data" href="./insert.php">Tambah Data</a>
-    <?php } ?>
-    <a class="logout" href="logout.php">Log Out</a>
-</div>
-<table>
-    <tr>
-        <th>NAMA</th>
-        <th>DATE</th>
-        <th>FORMAT</th>
-        <th>LOCATION</th>
-        <th>NOTES</th>
-        <?php if ($role == 'admin') { ?>
-            <th>Action</th>
-        <?php } ?>
-    </tr>
     <?php 
-    $sql = "SELECT * FROM `woi`";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) { ?>
-            <tr>
-                <td><?php echo htmlspecialchars($row["nama"]); ?></td>
-                <td><?php echo htmlspecialchars($row["datee"]); ?></td>
-                <td><?php echo htmlspecialchars($row["format"]); ?></td>
-                <td><?php echo htmlspecialchars($row["location"]); ?></td>
-                <td><?php echo htmlspecialchars($row["notes"]); ?></td>
-                <?php if ($role == 'admin') { ?>
-                    <td class="action-links">
-                        <a href="update.php?id=<?php echo htmlspecialchars($row['id']); ?>&token=<?php echo $csrf_token; ?>">Update</a>
-                        <a href="delete.php?id=<?php echo htmlspecialchars($row['id']); ?>&token=<?php echo $csrf_token; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a>
-                    </td>
-                <?php } ?>
-            </tr>
-        <?php }
-    } else {
-        echo "<tr><td colspan='7'>No data found</td></tr>";
-    }
-    $conn->close();
+        session_start(); 
+        $loggedIn = isset($_SESSION['loggedin']);
     ?>
-</table>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top navbar-transparent">
+        <div class="container">
+            <a class="navbar-brand fw-bolder" href="#home">FlagConquest</a> 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./main.php">Events</a> 
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./writeups.php">WriteUps</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./add_article.php">Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./aboutus.php">About us</a>
+                    </li>
+                    <?php if ($loggedIn): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./logout.php">Log out</a>
+                    </li>
+                    <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./login.php">Log in</a>
+                    </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- konten -->
+    <div class="content-section mt-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <div class="content-title mb-4">Welcome to FlagConquest</div>
+                    <div class="content-text">
+                        <p><strong>About FlagConquest</strong></p>
+                        <p>FlagConquest is an online platform dedicated to organizing Capture The Flag (CTF) events for cybersecurity enthusiasts, students, and professionals.</p>
+                        <p><strong>Our Mission</strong></p>
+                        <p>Our mission is to provide an engaging and educational experience for participants to enhance their skills in cybersecurity, penetration testing, and digital forensics.</p>
+                        <p><strong>Who We Serve</strong></p>
+                        <p>Whether you are a beginner looking to learn new techniques or an experienced professional seeking to challenge your expertise, FlagConquest offers a variety of CTF events suited to your level of expertise.</p>
+                        <p><strong>Join Us</strong></p>
+                        <p>Join us in our upcoming events, connect with like-minded individuals, and embark on a journey of continuous learning and improvement in the field of cybersecurity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- bagian kontak -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card contact-card">
+                    <div class="card-body">
+                        <h5 class="card-title contact-card-title">Contact Us</h5>
+                        <p class="card-text contact-card-text">For inquiries and support, you can reach us through:</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-discord"></i> Discord: FlagConquest#1234
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-whatsapp"></i> WhatsApp: +1234567890
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 </body>
 </html>

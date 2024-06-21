@@ -50,7 +50,7 @@ if (isset($_POST["submit"])) {
         if ($result) {
             echo "<script>
                     if (confirm('Data berhasil diupdate! Apakah Anda yakin ingin kembali ke halaman utama?')) {
-                        window.location.href = 'index.php';
+                        window.location.href = 'main.php';
                     }
                   </script>";
         } else {
