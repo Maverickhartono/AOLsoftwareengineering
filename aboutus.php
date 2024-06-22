@@ -137,7 +137,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <main>
         <div class="background-section">
             <h2>Background</h2>
-            <p>Formed by 5 students with a high interest in CTF. Knowing the many shortcomings & difficulties while exploring this field, we created a platform that is expected to make it easier for CTF players to forge their knowledge with minimal obstacles. The platform is called Flag Conquest.</p>
+            <p>Formed by 6 students with a high interest in CTF. Knowing the many shortcomings & difficulties while exploring this field, we created a platform that is expected to make it easier for CTF players to forge their knowledge with minimal obstacles. The platform is called Flag Conquest.</p>
         </div>
         <h2>The Agents</h2>
         <div class="agents">
@@ -168,6 +168,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <div class="agent-card">
                 <img src="./assets/run.gif" alt="Agent 5">
                 <h3>Matthew Hartono</h3>
+                <p>Cyber Security Student in Bina Nusantara University, have high interest in CTF & Penetration Testing</p>
+                <p>Cyber Security Student</p>
+            </div>
+            <div class="agent-card">
+                <img src="./assets/new.gif" alt="Agent 6" height ="150">
+                <h3>Fernando</h3>
                 <p>Cyber Security Student in Bina Nusantara University, have high interest in CTF & Penetration Testing</p>
                 <p>Cyber Security Student</p>
             </div>
